@@ -1,18 +1,13 @@
 import type { Metadata } from 'next'
 
-import { PayloadRedirects } from '@/components/PayloadRedirects'
+import { Redirects } from '@/components/Redirects'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
-import { homeStatic } from '@/endpoints/seed/home-static'
-
-import type { Page as PageType } from '@/payload-types'
 
 import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
-import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
 export async function generateStaticParams() {
@@ -50,32 +45,26 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { slug = 'home' } = await paramsPromise
   const url = '/' + slug
 
-  let page: PageType | null
-
-  page = await queryPageBySlug({
+  const page = await queryPageBySlug({
     slug,
   })
 
-  // Remove this code once your website is seeded
-  if (!page && slug === 'home') {
-    page = homeStatic
-  }
+  console.log(page)
 
   if (!page) {
-    return <PayloadRedirects url={url} />
+    return <Redirects url={url} />
   }
 
-  const { hero, layout } = page
+  const { heroTitle, layout } = page
 
   return (
     <article className="pt-16 pb-24">
-      <PageClient />
       {/* Allows redirects for valid pages too */}
-      <PayloadRedirects disableNotFound url={url} />
+      <Redirects disableNotFound url={url} />
+      <h1>{heroTitle}</h1>
 
       {draft && <LivePreviewListener />}
 
-      <RenderHero {...hero} />
       <RenderBlocks blocks={layout} />
     </article>
   )

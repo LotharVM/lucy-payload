@@ -1,4 +1,5 @@
-import RichText from '@/components/RichText'
+import { RichText } from '@payloadcms/richtext-lexical/react'
+
 import React from 'react'
 
 import { Width } from '../Width'
