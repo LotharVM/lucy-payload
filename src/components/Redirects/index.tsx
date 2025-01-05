@@ -13,7 +13,6 @@ interface Props {
 /* This component helps us with SSR based dynamic redirects */
 export const Redirects: React.FC<Props> = async ({ disableNotFound, url }) => {
   const redirects = await getCachedRedirects()()
-  console.log(redirects, url)
 
   const redirectItem = redirects.find((redirect) => redirect.from === url)
 

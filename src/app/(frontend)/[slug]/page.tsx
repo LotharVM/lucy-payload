@@ -49,8 +49,6 @@ export default async function Page({ params: paramsPromise }: Args) {
     slug,
   })
 
-  console.log(page)
-
   if (!page) {
     return <Redirects url={url} />
   }
