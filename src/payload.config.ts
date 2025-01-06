@@ -65,6 +65,10 @@ export default buildConfig({
   ],
   secret: process.env.PAYLOAD_SECRET,
   sharp,
+  localization: {
+    locales: ['en', 'de'],
+    defaultLocale: 'en',
+  },
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
